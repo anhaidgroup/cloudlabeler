@@ -14,9 +14,7 @@ RUN a2enmod cgi
 RUN ln -s ../mods-available/cgi.load
 CMD apachectl -D FOREGROUND
 
-
 # Copy our code to this image
-COPY ./html/. /var/www/html/
 COPY ./html/. /var/www/html/
 COPY ./cgi-bin/. /var/www/cgi-bin/
 
