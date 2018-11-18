@@ -78,3 +78,7 @@ Then, label your pairs in the Main Panel.
 After that, save your table using 'Save and Continue' button. You can close the page and label the pairs later if you have saved the table.
 
 Finally, download the final CSV file of the table you have saved using 'DownLoad CSV' button.
+
+### Rest API
+
+You can learn how to use REST api from [notebook](./notebooks/api.ipynb) (you need to install requests for this notebook).
