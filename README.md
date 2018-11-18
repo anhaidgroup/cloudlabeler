@@ -41,15 +41,15 @@ Finally, enable cgi and restart Apache2. You are all set.
 
 First, build the docker file by running [deploy.sh](./deploy.sh) we have provided.
 
-Next, install [AWS Command Line Interface](https://docs.aws.amazon.com/cli/) to help you push docker image. You can find the document for installation at https://docs.aws.amazon.com/cli/latest/userguide/installing.html. After installed cli, you need to [configure your cgi and set keys](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html).
+Next, install [AWS Command Line Interface](https://docs.aws.amazon.com/cli/) to help you push docker image. You can find the document for installation at https://docs.aws.amazon.com/cli/latest/userguide/installing.html. After installing cli, you need to [configure your cgi and set keys](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html).
 
 Then, [create your repositories in AWS ECR](https://docs.aws.amazon.com/AmazonECR/latest/userguide/repository-create.html). Note that the name of repository is better to be 'apache_labeler' (or you need to do more configurations to let docker identify your image). After you have created your repository, you should be able to find a 'View Push Commands' button. Here it will list all the commands needed to push docker image. **Note: 1. you don't need to recreate docker image. 2. read the step 2 of push commands carefully**.
 
-After that, create Task Definitions in [AWS ECS](https://aws.amazon.com/ecs/). You should use the url of the repository you have created as the container.
+After that, create Task Definition in [AWS ECS](https://aws.amazon.com/ecs/). You should use the url of the repository you have pushed as the container.
 
 Afterwords, create Cluster in [AWS ECS](https://aws.amazon.com/ecs/). The cluster template should be EC2 Linux and the Launch type should be EC2. After you have created a cluster, you should be able to create service in cluster page. Notice to choose the task you just created.
  
-Finally, you should be able to find the instance in [AWS EC2](https://aws.amazon.com/ec2/). Find 'instance' on the left and find the service you have just created. You can get the url of your instance in the IPv4 Public IP below. 
+Finally, you should be able to find the instance in [AWS EC2](https://aws.amazon.com/ec2/). Find 'instance' on the left panel and find the service you have just created. You can get the url of your instance in the IPv4 Public IP below. 
 
 ## User Manual
 
@@ -81,4 +81,4 @@ Finally, download the final CSV file of the table you have saved using 'DownLoad
 
 ### Rest API
 
-You can learn how to use REST api from [notebook](./notebooks/api.ipynb) (you need to install requests for this notebook).
+You can learn how to use REST api from [notebook](./notebooks/api.ipynb) (you need to install requests package).
