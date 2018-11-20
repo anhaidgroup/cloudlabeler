@@ -14,11 +14,11 @@ Cloud labeler has been tested on Ubuntu 18. For other version of Ubuntu, you may
 
 ### Dependencies
 
-* Apache2
-* Sqlite3
-* Pandas
+* Apache2 (tested version is 2.4.29)
+* Sqlite3 (tested version is 3.25.2)
+* Pandas (tested version is 0.23.4)
 
-If you want to deploy it in AWS, you need Docker.
+If you want to deploy it in AWS, you need Docker (tested version is 18.06.1-ce).
 
 ### Installing on Local Machine
 
@@ -28,7 +28,7 @@ First, clone the cloud labeler package from GitHub.
     
 Next, copy or replace the html and cgi-bin folders in the Apache Web Root (usually /var/www/).
 
-Then, enable cgi for both /cgi-bin/ and /html/api/ folders. You can learn how to enable cgi from https://httpd.apache.org/docs/2.4/howto/cgi.html. If you are using Ubuntu 18, you can replace /etc/apache2/apache2.conf and /etc/apache2/conf-available/serve-cgi-bin.conf using the [apache2.conf](./apache2.conf) and [serve-cgi-bin.conf](./serve-cgi-bin.conf) files we have provided.
+Then, enable cgi for both /cgi-bin/ and /html/api/ folders. You can learn how to enable cgi from https://httpd.apache.org/docs/2.4/howto/cgi.html. If you are using Ubuntu 18.04, you can replace /etc/apache2/apache2.conf and /etc/apache2/conf-available/serve-cgi-bin.conf using the [apache2.conf](./apache2.conf) and [serve-cgi-bin.conf](./serve-cgi-bin.conf) files we have provided.
 
 After that, set the permission of every python files in /cgi-bin/ (including download.csv) and /html/api/ to be executable. Set the read and write access for all users to the files in /cgi-bin/data.
 
@@ -36,10 +36,12 @@ Finally, enable cgi and restart Apache2. You are all set.
 
     a2enmod cgi
     service apache2 restart
-
+    
 ### Deploying on AWS
 
-First, build the docker file by running the [deploy.sh](./deploy.sh) file we have provided.
+First, build the docker file by running the [deploy.sh](./deploy.sh) file we have provided. Or you can pull the image from docker repository directly:
+
+    docker pull zachary62/apache_labeler
 
 Next, install [AWS Command Line Interface](https://docs.aws.amazon.com/cli/) to help you push docker image. You can find the document for installation at https://docs.aws.amazon.com/cli/latest/userguide/installing.html. After installing cli, you need to [configure your cgi and set keys](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html).
 
@@ -49,13 +51,13 @@ After that, create Task Definition in [AWS ECS](https://aws.amazon.com/ecs/). Yo
 
 Afterwords, create Cluster in [AWS ECS](https://aws.amazon.com/ecs/). The cluster template should be EC2 Linux and the Launch type should be EC2. After you have created a cluster, you should be able to create service in cluster page. Notice to choose the task you just created.
  
-Finally, you should be able to find the instance in [AWS EC2](https://aws.amazon.com/ec2/). Find 'instance' on the left panel and find the service you have just created. You can get the url of your instance in the IPv4 Public IP below. 
+Finally, you should be able to find the instance in [AWS EC2](https://aws.amazon.com/ec2/). Find 'instance' on the left panel and find the service you have just created. You can get the address of your instance in the IPv4 Public IP below. 
 
 ## User Manual
 
 ### Page Content
 
-On the right side, there are three panels:
+On the left side, there are three panels:
 
 1. The top panel is Label Summary Panel. It shows a summary counts of different label types **saved**.
 
