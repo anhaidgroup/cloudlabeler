@@ -6,11 +6,12 @@ Cloud labeler is a cloud-based tool for manual labeling of candidate tuple pairs
 
 ### Requirements
 
-Python 2.7
+Python 2.7+
+The default shebang is '#!/usr/bin/python'. If you need to use a different python, make sure to configure all the shebangs of python files.
 
 ### Platforms
 
-Cloud labeler has been tested on Ubuntu 18. For other version of Ubuntu, you may need to do some configurations.
+Cloud labeler has been tested on Ubuntu 18.04. For other version of Ubuntu, you may need to do some configurations.
 
 ### Dependencies
 
@@ -30,7 +31,7 @@ Next, copy or replace the html and cgi-bin folders in the Apache Web Root (usual
 
 Then, enable cgi for both /cgi-bin/ and /html/api/ folders. You can learn how to enable cgi from https://httpd.apache.org/docs/2.4/howto/cgi.html. If you are using Ubuntu 18.04, you can replace /etc/apache2/apache2.conf and /etc/apache2/conf-available/serve-cgi-bin.conf using the [apache2.conf](./apache2.conf) and [serve-cgi-bin.conf](./serve-cgi-bin.conf) files we have provided.
 
-After that, set the permission of every python files in /cgi-bin/ (including download.csv) and /html/api/ to be executable. Set the read and write access for all users to the files in /cgi-bin/data.
+After that, set the permission of every python file in /cgi-bin/ (including download.csv) and /html/api/ to be executable. Set the read and write access for all users to the files in /cgi-bin/data.
 
 Finally, enable cgi and restart Apache2. You are all set.
 
