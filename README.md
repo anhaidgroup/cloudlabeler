@@ -7,6 +7,7 @@ Cloud labeler is a cloud-based tool for manual labeling of candidate tuple pairs
 ### Requirements
 
 Python 2.7+
+
 The default shebang is '#!/usr/bin/python'. If you need to use a different python, make sure to configure all the shebangs of python files.
 
 ### Platforms
@@ -40,9 +41,11 @@ Finally, enable cgi and restart Apache2. You are all set.
     
 ### Deploying on AWS
 
-First, build the docker file by running the [deploy.sh](./deploy.sh) file we have provided. Or you can pull the image from docker repository directly:
+First, build the docker image by running the [deploy.sh](./deploy.sh) file we have provided.  Or you can pull the image from docker repository directly:
 
     docker pull zachary62/apache_labeler
+    
+(You can clean up the docker image later by running [takedown.sh](./takedown.sh)).
 
 Next, install [AWS Command Line Interface](https://docs.aws.amazon.com/cli/) to help you push docker image. You can find the document for installation at https://docs.aws.amazon.com/cli/latest/userguide/installing.html. After installing cli, you need to [configure your cgi and set keys](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html).
 
