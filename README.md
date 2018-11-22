@@ -87,9 +87,7 @@ Use Appraoch 2 if you
 
 ### Approach 1
 
-1. Create an AWS account if you don't have one. Login in [EC2](https://aws.amazon.com/ec2/). Find 'Instances' in the right panels.
-
-   a. If you want to create a new instance. 
+1. Create an AWS account if you don't have one. Login in [EC2](https://aws.amazon.com/ec2/). Find 'Instances' in the right panels. You then need to create a new instance:
    
       - Find and click on 'Launch Instance' in the instances page. 
    
@@ -97,27 +95,31 @@ Use Appraoch 2 if you
    
       - Choose General purpose Family t2.micro Type as your Instance Type if you want to use your free tier. 
    
-      - In your Security Group, you should include both 'SSH' and 'HTTP'. If you are unsure whether you have included both, choose 'All Traffic' as the type of Security Group. If you are unsure about Source in the Security Group, choose 'Anywhere'. 
+      - In your Security Group, you should include both 'SSH' and 'HTTP'. If you are unsure about whether you have included both, choose 'All Traffic' as the type of Security Group. If you are unsure about Source in the Security Group, choose 'Anywhere'. 
    
       - You can leave other options as default. 
    
       - After clicking 'Launch', choose 'Create a new key pair', enter your key pair name and Download Key Pair.
-   
-   b. If you want to deploy cloud labeler on an existed EC2 instance, click your instance and check its description. 
+      
+   <details><summary markdown='span'>Already have your deployed instance?</summary><br /> 
+      If you want to deploy cloud labeler on an existed EC2 instance, click your instance and check its description. 
    
       - Its AMI ID should include 'ubuntu-bionic-18.04'. 
    
       - In its Security groups, the inbound rules should include both 'SSH' and 'HTTP'. 
    
       - Otherwise, you need to launch a new instance.
+ </details>
 
 2. Connect to AWS machine using SSH. 
 
 
-<details><summary markdown='span'> If you don't know how to connect to AWS machine using SSH, we recommend a convenient tool.  </summary>
-    
-   - Download and install [Putty](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html), an SSH and telnet client. 
+    <details><summary markdown='span'> Don't know how to connect to AWS machine using SSH? </summary><br /> 
+  
+   If you don't know how to connect to AWS machine using SSH, we recommend a convenient tool.
    
+   - Download and install [Putty](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html), an SSH and telnet client.
+     
    - In the end of 1.a, you should download a Key Pair and it is a pem file. Open 'Putty Key Generator' and Load the Key Pair pem file in 'Load an existing private key file'. Then, choose 'Save private key' as ppk file. 
    
    - Open Putty and enter the 'Host name (or IP address)'. You can find the Host name of your AWS machine by clicking EC2 instance in [EC2](https://aws.amazon.com/ec2/) and check 'Public DNS (IPv4)' or 'IPv4 Public IP' in its description. 
@@ -127,10 +129,7 @@ Use Appraoch 2 if you
    - Click 'Open' in the right bottom.
 </details>
   
-   
-
-   
-3. Putty should open cmd of AWS machine for you. The first prompt should be 'login as'. Type 'ubuntu'.
+3. In the cmd of AWS machine, the first prompt should be 'login as'. Type 'ubuntu'.
 
 4. Install [Docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-docker-ce) by following the steps in the tutorial.
 
@@ -142,6 +141,7 @@ Use Appraoch 2 if you
    
     <details><summary markdown='span'> Using your own Docker image?</summary>
     <br />
+  
     If you are using your own Docker image, you should pull from your own Docker Hub. For example, if your Docker Hub repository name is John/apache_labeler, type:
    
      ```
@@ -159,6 +159,7 @@ Use Appraoch 2 if you
     <br /> 
 
     If you are using your own Docker image, you should use your own container name. For example, if your container name is John/apache_labeler, type
+    
     ```
     sudo docker run -dit --name labeler -p 8080:80 John/apache_labeler
     ```
