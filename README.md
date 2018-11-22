@@ -120,7 +120,7 @@ Use Appraoch 2 if you
    
    - Download and install [Putty](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html), an SSH and telnet client.
      
-   - In the end of 1.a, you should download a Key Pair and it is a pem file. Open 'Putty Key Generator' and Load the Key Pair pem file in 'Load an existing private key file'. Then, choose 'Save private key' as ppk file. 
+   - In the end of 1, you should download a Key Pair and it is a pem file. Open 'Putty Key Generator' and Load the Key Pair pem file in 'Load an existing private key file'. Then, choose 'Save private key' and save Key Pair as ppk file. 
    
    - Open Putty and enter the 'Host name (or IP address)'. You can find the Host name of your AWS machine by clicking EC2 instance in [EC2](https://aws.amazon.com/ec2/) and check 'Public DNS (IPv4)' or 'IPv4 Public IP' in its description. 
    
@@ -165,7 +165,7 @@ Use Appraoch 2 if you
     ```
 </details>
 
-7. Now, you should be able to open cloud labeler. You can find the IP address of your AWS machine by clicking EC2 instance in [EC2](https://aws.amazon.com/ec2/) and check 'IPv4 Public IP' in its description. Append ':8080' to your IPv4 Public IP. If your 'IPv4 Public IP' is '1.2.3.4', you can use cloud labeler in 'http://1.2.3.4:8080/'.
+7. Now, you should be able to open cloud labeler. You can find the IP address of your AWS machine by clicking EC2 instance in [EC2](https://aws.amazon.com/ec2/) and check 'IPv4 Public IP' in its description. Append ':8080' to your IPv4 Public IP. For example, if your 'IPv4 Public IP' is '1.2.3.4', you can visit cloud labeler in 'http://1.2.3.4:8080/'.
     
 8. To clean up cloud labeler, run:
     ```
