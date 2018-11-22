@@ -1,0 +1,4 @@
+
+cgi-bin/data/labels.db
+*.db
+cgi-bin/data/tablename

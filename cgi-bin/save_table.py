@@ -7,8 +7,8 @@ import os
 
 fs = cgi.FieldStorage()
 
-print """Content-Type: application/json\n
-"""
+print ("""Content-Type: application/json\n
+""")
 
 label_info = fs.getvalue('checked_options')
 md.save_data(label_info)

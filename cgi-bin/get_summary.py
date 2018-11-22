@@ -5,8 +5,8 @@ import json
 
 fs = cgi.FieldStorage()
 
-print """Content-Type: application/json\n
-"""
+print ("""Content-Type: application/json\n
+""")
 
 l = md.get_summary()
 result = json.dumps(l, indent=1)

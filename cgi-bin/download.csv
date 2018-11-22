@@ -6,7 +6,7 @@ from pandas.io import sql
 
 data = md.read_table()
 
-print """\
+print ("""\
 Content-Type: text/csv\n
 %s
-""" % (data.to_csv(index= False),)
+""" % (data.to_csv(index= False),))

@@ -9,8 +9,8 @@ form = cgi.FieldStorage()
 tablen = form['tablename'].value
 md.save_table(tablen)
 
-print """Content-Type: application/json\n
-"""
+print ("""Content-Type: application/json\n
+""")
 
 # Return a result
 t = datetime.datetime.now().strftime("%I:%M%p on %B %d, %Y")

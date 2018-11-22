@@ -24,7 +24,7 @@ if fileitem1.filename and fileitem2.filename and fileitem3.filename:
        message = message + "<p><strong>Note:</strong> Save your old table before loading your new table or the data will be lost.</p>"
        message = message + "<p>Below is a preview of one tuple pair page:</p>"
        message = message + html
-   except Exception,e:
+   except Exception as e:
        message = "<p><font size=\"6\"><b>An error has occured!</b></font></p>"
        message = message + "<p>Please check your csv files according to the error message!</p>"
        message = message + "<p>Key Word for the error is: " + str(e) + "</p>"
@@ -34,11 +34,11 @@ else:
    message = 'Please choose three CSV files'
 
 
-print """\
+print ("""\
 Content-Type: text/html\n
 <html>
 <body>
    <p>%s</p>
 </body>
 </html>
-""" % (message,)
+""" % (message,))

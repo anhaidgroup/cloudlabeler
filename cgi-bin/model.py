@@ -4,7 +4,7 @@ import json
 import os
 import sqlite3
 from pandas.io import sql
-from StringIO import StringIO
+import six
 
 
 # Database file and table
@@ -24,7 +24,7 @@ def getTable():
 # Upload a csv file into the database
 def upload_table(tablen,fileitem):
     getTable()
-    io = StringIO(fileitem.file.read())
+    io = six.StringIO(fileitem.file.read().decode("utf-8") )
     # Load csv file into pandas
     table = pd.read_csv(io)
     # Save the pandas dataframe as a sql file
@@ -60,17 +60,19 @@ def read_data(filename = sql_path, filter_label_str=None, l_prefix='ltable_', r_
     d['id'] = id_col
     d['columns'] = cols
     d['label'] = label_col
-    d['ltable'] = ltable
-    d['rtable'] = rtable
+    # convert it to list because dict_values is not json serializable in python3
+    d['ltable'] = list(ltable)
+    d['rtable'] = list(rtable)
     return json.dumps(d)
 
 def generate_tuplepage(file1, file2, file3):
 
-    io1 = StringIO(file1.file.read())
+    #decode because in python3, stringIO need str not bytes
+    io1 = six.StringIO(file1.file.read().decode("utf-8"))
     A = pd.read_csv(io1)
-    io2 = StringIO(file2.file.read())
+    io2 = six.StringIO(file2.file.read().decode("utf-8"))
     B = pd.read_csv(io2)
-    io3 = StringIO(file3.file.read())
+    io3 = six.StringIO(file3.file.read().decode("utf-8") )
     L = pd.read_csv(io3)
 
     # Get common columns
@@ -196,18 +198,20 @@ def _update_tbl_labels(data, ids_chopped):
 
 
 def _parse_label_str(x):
-    x = x.encode('ascii','ignore')
+    # this line causes problem for x_splitted
+    # don't know why encode in the first place
+    # x = x.encode('ascii','ignore')
     x_splitted = map(str.strip, x.split(','))
     ids_chopped = [] # chop and convert to int
     for t in x_splitted:
-	idx, lid, rid, label = map(str.strip, t.split('_'))
-	ids_chopped.append([int(idx),lid,rid,int(label)])
+	       idx, lid, rid, label = map(str.strip, t.split('_'))
+	       ids_chopped.append([int(idx),lid,rid,int(label)])
     #print(ids_chopped)
     return ids_chopped
 
 
 def _parse_label_types(x):
-    x = x.encode('ascii', 'ignore')
+    #x = x.encode('ascii', 'ignore')
     x_splitted = map(int, map(str.strip, x.split(',')))
     return x_splitted
 
@@ -267,7 +271,8 @@ def get_summary(tablen='', api=False):
             cnt = sum(v == i)
             d = {}
             d['label'] = label_list[i]
-            d['value'] = cnt
+            # make it an int or otherwise it is not serializable in python3
+            d['value'] = int(cnt)
             dlist.append(d)
         dd = {}
         dd['foo'] = dlist
@@ -275,6 +280,6 @@ def get_summary(tablen='', api=False):
         return dd
     else:
         d = {}
-        d['unlabel'] = sum(v == 0)
-        d['total'] = data.shape[0]
+        d['unlabel'] = int(sum(v == 0))
+        d['total'] = int(data.shape[0])
         return json.dumps(d)
