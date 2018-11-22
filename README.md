@@ -15,7 +15,7 @@ Notice that you can choose either "Installing on Local Machine" or "Deploying on
 
 ### Requirements
 
-Python 2 version 2.7+ or Python 3 version 3.6+
+Python 2 version 2.7+ or Python 3 version 3.5+
 
 <details><summary markdown='span'>Want to use your own python?</summary>
 <br />
