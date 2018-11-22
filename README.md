@@ -165,7 +165,7 @@ Use Appraoch 2 if you
     ```
 </details>
 
-7. Now, you should be able to open cloud labeler. You can find the IP address of your AWS machine by clicking EC2 instance in [EC2](https://aws.amazon.com/ec2/) and check 'IPv4 Public IP' in its description. If your 'IPv4 Public IP' is '1.2.3.4', you can use cloud labeler in 'http://1.2.3.4:8080/'.
+7. Now, you should be able to open cloud labeler. You can find the IP address of your AWS machine by clicking EC2 instance in [EC2](https://aws.amazon.com/ec2/) and check 'IPv4 Public IP' in its description. Append ':8080' to your IPv4 Public IP. If your 'IPv4 Public IP' is '1.2.3.4', you can use cloud labeler in 'http://1.2.3.4:8080/'.
     
 8. To clean up cloud labeler, run:
     ```
@@ -197,7 +197,7 @@ Use Appraoch 2 if you
 
 2. Install [AWS Command Line Interface](https://docs.aws.amazon.com/cli/) on your local machine to help you push docker image. You can find the document for installation at https://docs.aws.amazon.com/cli/latest/userguide/installing.html. 
 
-3. [Configure your cgi and set keys](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html) on your local machine so that it has access to your AWS account.
+3. [Configure your cgi and set keys](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html) on your local machine so that it has access to your AWS account. If you aren't an IAM user, you need to first [Creating an IAM User and Group (AWS CLI)](https://docs.aws.amazon.com/IAM/latest/UserGuide/getting-started_create-admin-group.html).
 
 4. [Create your repositories in AWS ECR](https://docs.aws.amazon.com/AmazonECR/latest/userguide/repository-create.html). Note that the name of repository should be 'apache_labeler' (or you will need to do more configurations to let docker identify your image). 
 
@@ -209,7 +209,7 @@ Use Appraoch 2 if you
 
 8. After you have created a cluster, you should be able to create [service](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs_services.html) in cluster page. Notice to choose the task you just created.
  
-9. You should be able to find the deployed instances in [AWS EC2](https://aws.amazon.com/ec2/). Find 'instance' on the left panel and find the service you have just created. You can get the address of your instance in the IPv4 Public IP below. 
+9. You should be able to find the deployed instances in [AWS EC2](https://aws.amazon.com/ec2/). Find 'instance' on the left panel and find the service you have just created. You can get the address of your instance directly in the IPv4 Public IP below. 
 
 ## User Manual
 
