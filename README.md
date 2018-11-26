@@ -47,6 +47,13 @@ Cloud labeler has been tested on Ubuntu 18.04. For other versions of Ubuntu, you
 
 4. Set the permission of every python file in /cgi-bin/ (including download.csv) and /html/api/ to be executable. Set the read and write access for all users to the files in /cgi-bin/data.
 
+    ```
+    chmod -R 755 /var/www/cgi-bin
+    chmod -R 755 /var/www/html/api
+    chmod -R 666 /var/www/cgi-bin/data
+    chmod 755 /var/www/cgi-bin/data
+    ```
+
 5. Enable cgi and restart Apache2. You are all set.
     
     ```
@@ -111,12 +118,30 @@ Use Appraoch 2 if you
       - Otherwise, you need to launch a new instance.
  </details>
 
-2. Connect to AWS machine using SSH. 
+2. Connect to AWS machine using [SSH](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html). 
 
 
     <details><summary markdown='span'> Don't know how to connect to AWS machine using SSH? </summary><br /> 
   
-   If you don't know how to connect to AWS machine using SSH, we recommend a convenient tool.
+  
+   If your system is Linux or Mac,
+  
+   - In the end of 1, you should download a Key Pair and it is a pem file. Set the permission of the pem file.
+   
+   ```
+   chmod 400 /path/my-key-pair.pem
+   ```
+   
+   - Use the ssh command to connect to the instance. You need to specify your pem file and user_name@public_dns_name. The user_name should be 'ubuntu'. You can find the public_dns_name of your AWS machine by clicking EC2 instance in [EC2](https://aws.amazon.com/ec2/) and check 'Public DNS (IPv4)' in its description. For example, if your pem file is at /path/my-key-pair.pem and your Public DNS (IPv4) is ec2-198-51-100-1.compute-1.amazonaws.com, type:
+   
+   ```
+   ssh -i /path/my-key-pair.pem ubuntu@ec2-198-51-100-1.compute-1.amazonaws.com
+   ```
+   
+   - Type 'yes' when asked.
+   
+   
+   If your system is Windows, we recommend a convenient tool.
    
    - Download and install [Putty](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html), an SSH and telnet client.
      
@@ -167,7 +192,7 @@ Use Appraoch 2 if you
 
 7. Now, you should be able to open cloud labeler. You can find the IP address of your AWS machine by clicking EC2 instance in [EC2](https://aws.amazon.com/ec2/) and check 'IPv4 Public IP' in its description. Append ':8080' to your IPv4 Public IP. For example, if your 'IPv4 Public IP' is '1.2.3.4', you can visit cloud labeler in 'http://1.2.3.4:8080/'.
     
-8. To clean up cloud labeler, run:
+8. When you are done, you may need to remove the image and container. You should run:
     ```
     sudo docker stop labeler
     sudo docker rm labeler
