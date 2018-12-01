@@ -9,7 +9,7 @@ Cloud labeler is a cloud-based tool for manual labeling of candidate tuple pairs
   + [Approach 2](#approach-2)
 * [User Manual](#user-manual)
   
-Notice that you can choose either "Installing on Local Machine" or "Deploying on AWS". You can choose first install cloud labeler on your local machine, make your own changes, create your docker image and deploy it on AWS. However, "Installing on Local Machine" is **not** a prerequisite of "Deploying on AWS". We will provide existing docker image for easy use when deploying cloud labeler on AWS.
+Notice that you can choose either "Installing on Local Machine" or "Deploying on AWS". You can choose first build cloud labeler on your local machine, make some changes, create your docker image and deploy it on AWS. However, "Installing on Local Machine" is **not** a prerequisite of "Deploying on AWS". We will provide existing docker image for easy use when deploying cloud labeler on AWS.
 
 ## Installing on Local Machine
 
@@ -41,7 +41,7 @@ Cloud labeler has been tested on Ubuntu 18.04. For other versions of Ubuntu, you
     git clone https://github.com/anhaidgroup/cloudlabeler.git
     ```
 
-2. Copy or replace the html and cgi-bin folders in the Apache Web Root (usually /var/www/).
+2. Copy or replace the /html and /cgi-bin folders in the Apache Web Root (usually /var/www/).
 
 3. Enable cgi for both /cgi-bin/ and /html/api/ folders. You can learn how to enable cgi from https://httpd.apache.org/docs/2.4/howto/cgi.html. If you are using Ubuntu 18.04, you can replace /etc/apache2/apache2.conf and /etc/apache2/conf-available/serve-cgi-bin.conf using the [apache2.conf](./apache2.conf) and [serve-cgi-bin.conf](./serve-cgi-bin.conf) files we have provided.
 
@@ -96,26 +96,28 @@ Use Appraoch 2 if you
 
 1. We use [AWS](https://aws.amazon.com/), a secure cloud services platform, to deploy cloud labeler. If you don't have an AWS account, click [here](https://portal.aws.amazon.com/billing/signup#/start) to create a new accout. 
 
-      - After you have created your account, in [aws](https://aws.amazon.com/) homapage, click "complete sign up" button at the top-right corner. 
-      - After you have signed up, in [aws](https://aws.amazon.com/) homapage, the button at the top-right corner should display: "sign in the console". Click it and sign in your console. 
+      - After you have created your account, in [aws](https://aws.amazon.com/) homapage, click "complete sign up" button at the top-right corner. You need to enter Email address and Password of your AWS account to sign up.
+      - After you have signed up, in [aws](https://aws.amazon.com/) homapage, the button at the top-right corner should display: "sign in the console". Click it and sign in your console. Now you are in your console page.
 
-2. In your console, you can find a panel named "AWS services" in the beginning which allows you to search for all AWS services. 
+2. In your console page, you can find a panel named "AWS services" in the beginning which allows you to search for all AWS services. 
       
-      - Type and search [EC2](https://aws.amazon.com/ec2/), a cloud computing service, to help you deploy cloud labeler. Now, you should be in EC2 home page. 
+      - Search and enter [EC2](https://aws.amazon.com/ec2/), a cloud computing service, to help you deploy cloud labeler. Now, you should be in EC2 home page. 
       
-      - EC2 provides instance, a cloud virtual machine, as server. To create EC2 instance, first find 'Instances' in the right panel of EC2 home page and click it. You are now in the EC2 instance page.
-   
-      - Find and click on the blue botton 'Launch Instance' in the EC2 instance page. You now begin to configure your EC2 instance.
-   
-      - Choose Ubuntu Server 18.04 LTS (HVM) as your Amazon Machine Image in "Step 1: Choose an Amazon Machine Image (AMI)". 
-   
-      - Choose General purpose Family t2.micro Type as your Instance Type if you want to use your free tier in "Step 2: Choose an Instance Type".
+      - EC2 provides instance, a cloud virtual machine, as server to deploy cloud labeler. To create EC2 instance, first find 'Instances' in the right panel of EC2 home page and click it. You are now in the EC2 instance page. 
       
-      - For "Step 3: Configure Instance Details", "Step 4: Add Storage", "Step 5: Add Tags", you can leave the options as default if you are unsure. 
+      - Next, find and click on the blue botton 'Launch Instance' in the EC2 instance page. You are now in your EC2 instance configuration page.
    
-      - In "Step 6: Configure Security Group", you should include both 'SSH' and 'HTTP' to your security group. If you are unsure about whether you have included both, choose 'All Traffic' as the type of Security Group. If you are unsure about Source in the Security Group, choose 'Anywhere'. You can click "launch" button at the bottom-right corner.
+      - Choose 'Ubuntu Server 18.04 LTS (HVM)' as your Amazon Machine Image in "Step 1: Choose an Amazon Machine Image (AMI)" of your EC2 instance configuration page. 
    
-      - After clicking 'Launch', choose 'Create a new key pair', enter your key pair name and Download Key Pair.
+      - Choose General purpose Family t2.micro Type as your Instance Type if you want to use your free tier in "Step 2: Choose an Instance Type" of your EC2 instance configuration page.
+      
+      - For "Step 3: Configure Instance Details", "Step 4: Add Storage", "Step 5: Add Tags" in your EC2 instance configuration page, you can leave the options as default if you are unsure. 
+   
+      - In "Step 6: Configure Security Group" of your EC2 instance configuration page, you should include both 'SSH' and 'HTTP' to your security group. If you are unsure about whether you have included both, choose 'All Traffic' as the type of Security Group. Then, you need to specify IP address that has the permission to reach your EC2 instance in the Source in the Security Group. If you are unsure about Source in the Security Group, choose 'Anywhere'. 
+      
+      - In "Step 7: Review Instance Launch" of your EC2 instance configuration page, you can review all the configurations of your EC2 instance. After that, you can click "launch" button at the bottom-right corner of your EC2 instance configuration page.
+   
+      - After clicking 'Launch', you need to specify a key pair, which is a key that enables you to log into your instance later. If you already have your key pair, choose 'Choose a new key pair' in the first drop-down list, and select the key pair you want to use in the second drop-down list. If you don't have a key pair, choose 'Create a new key pair', enter your key pair name and download Key Pair. You need to save the Key Pair in a secure place in your local machine.
       
    <details><summary markdown='span'>Already have your deployed instance?</summary><br /> 
       If you want to deploy cloud labeler on an existed EC2 instance, click your instance in EC2 instance page and check its description shown below. 
@@ -127,47 +129,46 @@ Use Appraoch 2 if you
       - Otherwise, you need to launch a new instance.
  </details>
 
-3. Connect to EC2 instance you just created using [SSH](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html). 
+3. Connect to EC2 instance you just created using [SSH](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html). You are now in the Command Shell of your EC2 instance.
 
 
     <details><summary markdown='span'> Don't know how to connect to EC2 instance using SSH? </summary><br /> 
   
   
-   If your system is Linux or Mac,
+   If the system of your local machine is Linux or Mac,
   
-   - In the end of 1, you should download a Key Pair and it is a pem file. Set the permission of the pem file. For example, if your pem file is at /path/my-key-pair.pem, type:
+   - In the end of step 1, you should download a Key Pair and it is a pem file. Set the permission of the pem file to be read only for the owner. For example, if your pem file is at /path/my-key-pair.pem, type:
    
    ```
    chmod 400 /path/my-key-pair.pem
    ```
    
-   - Use the ssh command to connect to the instance. You need to specify your pem file and user_name@public_dns_name. The user_name should be 'ubuntu'. You can find the public_dns_name of your EC2 instance by clicking it in EC2 instance page and check 'Public DNS (IPv4)' in its description below. For example, if your pem file is at /path/my-key-pair.pem and your Public DNS (IPv4) is ec2-198-51-100-1.compute-1.amazonaws.com, type:
+   - Use ssh command in your local machine to connect to the EC2 instance. You need to specify your pem file location, user name and host name in your ssh command. The user name should be 'ubuntu'. You can find the host name of your EC2 instance by clicking your EC2 instance in EC2 instance page and check 'Public DNS (IPv4)' in its description below. For example, if your pem file is at /path/my-key-pair.pem and your Public DNS (IPv4) is ec2-198-51-100-1.compute-1.amazonaws.com, type:
    
    ```
    ssh -i /path/my-key-pair.pem ubuntu@ec2-198-51-100-1.compute-1.amazonaws.com
    ```
    
-   - Type 'yes' when asked.
+   - Type 'yes' when asked. You are now in the Command Shell of your EC2 instance.
    
+   If the system of your local machine is Windows, we recommend a convenient tool.
    
-   If your system is Windows, we recommend a convenient tool.
-   
-   - Download and install [Putty](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html), an SSH and telnet client.
+   - Download and install [Putty](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html), an SSH and telnet client，in your local machine.
      
-   - In the end of 1, you should download a Key Pair and it is a pem file. Open 'Putty Key Generator' and Load the Key Pair pem file in 'Load an existing private key file'. Then, choose 'Save private key' and save Key Pair as ppk file. 
+   - In the end of step 1, you should download a Key Pair in your local machine and it is a pem file. Open 'Putty Key Generator' in your local machine and Load the Key Pair pem file in 'Load an existing private key file' section. Then, choose 'Save private key' and save Key Pair as ppk file in your local machine. 
    
-   - Open Putty and enter the 'Host name (or IP address)'. You can find the Host name of your AWS machine by clicking EC2 instance in [EC2](https://aws.amazon.com/ec2/) and check 'Public DNS (IPv4)' or 'IPv4 Public IP' in its description. 
+   - Open Putty in your local machine and enter the 'Host name (or IP address)' in Putty. You can find the Host name of your AWS machine by clicking EC2 instance in EC2 instance page and check 'Public DNS (IPv4)' or 'IPv4 Public IP' in its description below. 
    
-   - In the left panel of Putty, choose Connection->SSH->Auth. In 'Private key file for authentication', choose the ppk file generated by 'Putty Key Generator'.
+   - In the left panel of Putty in your local machine, choose Connection->SSH->Auth. In 'Private key file for authentication', choose the ppk file generated by 'Putty Key Generator' in your local machine.
    
-   - Click 'Open' in the right bottom.
+   - Click 'Open' in the right bottom. You are now in the Command Shell of your EC2 instance.
 </details>
   
-4. In the cmd of AWS machine, the first prompt should be 'login as'. Type 'ubuntu'.
+4. In the Command Shell of your EC2 instance, the first prompt should be 'login as'. Type 'ubuntu' in the Command Shell of your EC2 instance.
 
-5. Install [Docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-docker-ce) by following the steps in the tutorial.
+5. Install Docker in your EC2 instance. You should type commands specified in [Docker installation tutorial]((https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-docker-ce)) in the Command Shell of your EC2 instance.
 
-6. After you have installed Docker, pull the image from Docker Hub:
+6. After you have installed Docker in your EC2 instance, pull the image from Docker Hub by typing the following command in the Command Shell of your EC2 instance.
 
     ```
     sudo docker pull zachary62/apache_labeler
@@ -184,7 +185,7 @@ Use Appraoch 2 if you
     </details>
 
 
-7. Run the Docker image:
+7. Run the Docker image in your EC2 instance by typing the following command in the Command Shell of your EC2 instance.
 
     ```
     sudo docker run -dit --name labeler -p 8080:80 zachary62/apache_labeler
@@ -199,9 +200,9 @@ Use Appraoch 2 if you
     ```
 </details>
 
-8. Now, you should be able to open cloud labeler. You can find the IP address of your AWS machine by clicking EC2 instance in EC2 instance page and check 'IPv4 Public IP' in its description below. Append ':8080' to your IPv4 Public IP. For example, if your 'IPv4 Public IP' is '1.2.3.4', you can visit cloud labeler in 'http://1.2.3.4:8080/'.
+8. Now, you should be able to use cloud labeler. You can find the IP address of your EC2 instance by clicking the EC2 instance in EC2 instance page and check 'IPv4 Public IP' in its description below. Append ':8080' to your IPv4 Public IP. For example, if your 'IPv4 Public IP' is '1.2.3.4', you can visit cloud labeler in 'http://1.2.3.4:8080/' in your local machine (or any other machine whose IP address is included in the Source in the Security Group specified in step 3).
     
-9. When you are done, you may need to remove the image and container. You should run:
+9. When you are done, you may need to remove the image and container in your EC2 instance. You should type the following command in the Command Shell of your EC2 instance.
     ```
     sudo docker stop labeler
     sudo docker rm labeler
