@@ -35,17 +35,39 @@ Cloud labeler has been tested on Ubuntu 18.04. For other versions of Ubuntu, you
 
 ### Steps
 
-1. Clone the cloud labeler package from GitHub.
+1. Clone the cloud labeler package from GitHub by typing the following command.
 
     ```
     git clone https://github.com/anhaidgroup/cloudlabeler.git
     ```
 
-2. Copy or replace the /html and /cgi-bin folders in the Apache Web Root (usually /var/www/).
+2. Copy or replace the /html and /cgi-bin folders in the Apache Web Root (usually /var/www/html). If your Apache Web Root is /var/www/html, you can copy or replace the /html and /cgi-bin folders by typing the following command.
 
-3. Enable cgi for both /cgi-bin/ and /html/api/ folders. You can learn how to enable cgi from https://httpd.apache.org/docs/2.4/howto/cgi.html. If you are using Ubuntu 18.04, you can replace /etc/apache2/apache2.conf and /etc/apache2/conf-available/serve-cgi-bin.conf using the [apache2.conf](./apache2.conf) and [serve-cgi-bin.conf](./serve-cgi-bin.conf) files we have provided.
+  ```
+  rm -r /var/www/html
+  rm -r /var/www/cgi-bin
+  cp -r /html /var/www/html
+  cp -r /cgi-bin /var/www/cgi-bin
+  ```
+  
+  If you are asked 'rm: remove directory?', type 'y'.
+  If you are told that 'rm: cannot remove directory: No such file or directory', it's fine.
+  
+  <details><summary markdown='span'>Don't know where is your Apache Web Root?</summary> 
+  <br />
+  You can find your Apache Web Root in the file '/etc/apache2/sites-available/000-default.conf'. Type the following command:
+  
+  ```
+  cat /etc/apache2/sites-available/000-default.conf
+  ```
+  
+  In this file, you should find a line like this: 'DocumentRoot /somepath'
+  The path after DocumentRoot (/somepath in the example) is your Apache Web Root.
+</details>
+  
+3. Set both /cgi-bin/ and /html/api/ folders to have CGI execution permission. You can learn how to set CGI execution permission from https://httpd.apache.org/docs/2.4/howto/cgi.html. If you are using Ubuntu 18.04, you can add execution permission for /cgi-bin/ and /html/api/ folders by replacing /etc/apache2/apache2.conf and /etc/apache2/conf-available/serve-cgi-bin.conf using the [apache2.conf](./apache2.conf) and [serve-cgi-bin.conf](./serve-cgi-bin.conf) files we have provided.
 
-4. Set the permission of every python file in /cgi-bin/ (including download.csv) and /html/api/ to be executable. Set the read and write access for all users to the files in /cgi-bin/data. For example, if your Apache Web Root is /var/www/, type:
+4. Set every python file in /cgi-bin/ (including download.csv) and /html/api/ to have execution permission for all users. Set the files in /cgi-bin/data to have read and write permission for all users. For example, if your Apache Web Root is /var/www/html, type:
 
     ```
     chmod -R 755 /var/www/cgi-bin
@@ -54,7 +76,7 @@ Cloud labeler has been tested on Ubuntu 18.04. For other versions of Ubuntu, you
     chmod 755 /var/www/cgi-bin/data
     ```
 
-5. Enable cgi and restart Apache2. You are all set.
+5. Enable CGI service and restart Apache2. You are all set.
     
     ```
     sudo a2enmod cgi
@@ -94,24 +116,28 @@ Use Appraoch 2 if you
 
 ### Approach 1
 
-1. We use [AWS](https://aws.amazon.com/), a secure cloud services platform, to deploy cloud labeler. If you don't have an AWS account, click [here](https://portal.aws.amazon.com/billing/signup#/start) to create a new accout. 
+1. We use [AWS](https://aws.amazon.com/), a secure cloud services platform, as the platform to deploy cloud labeler. If you don't have an AWS account, click [here](https://portal.aws.amazon.com/billing/signup#/start) to create a new accout. 
 
-      - After you have created your account, in [AWS](https://aws.amazon.com/) homapage, click "complete sign up" button at the top-right corner. You need to enter Email address and Password of your AWS account to sign up.
-      - After you have signed up, in [AWS](https://aws.amazon.com/) homapage, the button at the top-right corner should display: "sign in the console". Click it and sign in your console. Now you are in your console page.
+      - After you have created your account, you need to sign up. In [AWS](https://aws.amazon.com/) homapage, click "complete sign up" button at the top-right corner. You need to enter Email address and Password of your AWS account to sign up.
+      - After you have signed up, you need to sign in the console. In [AWS](https://aws.amazon.com/) homapage, the button at the top-right corner should display: "sign in the console". Click it and sign in your console. Now you are in your console page.
 
-2. In your console page, you can find a panel named "AWS services" in the beginning which allows you to search for all AWS services. 
+2. We use [EC2](https://aws.amazon.com/ec2/), a cloud computing service provided by AWS, to help you deploy cloud labeler.
       
-      - Search and enter [EC2](https://aws.amazon.com/ec2/), a cloud computing service, to help you deploy cloud labeler. Now, you should be in EC2 home page. 
+      - In your console page, you can find a panel named 'AWS services' in the beginning which allows you to search for all AWS services. Search and enter [EC2](https://aws.amazon.com/ec2/) in the 'AWS services' panel. Now, you should be in EC2 home page. 
       
-      - EC2 provides instance, a cloud virtual machine, as server to deploy cloud labeler. To create EC2 instance, first find 'Instances' in the right panel of EC2 home page and click it. You are now in the EC2 instance page. 
+3. EC2 provides instance, a cloud virtual machine, as the server to deploy cloud labeler. We now need to create EC2 instance.   
+
+      - First find 'Instances' in the right panel of EC2 home page and click it. You are now in the EC2 instance page. 
       
       - Next, find and click on the blue botton 'Launch Instance' in the EC2 instance page. You are now in your EC2 instance configuration page.
-   
-      - Choose 'Ubuntu Server 18.04 LTS (HVM)' as your Amazon Machine Image in "Step 1: Choose an Amazon Machine Image (AMI)" of your EC2 instance configuration page. 
-   
-      - Choose General purpose Family t2.micro Type as your Instance Type if you want to use your free tier in "Step 2: Choose an Instance Type" of your EC2 instance configuration page.
       
-      - For "Step 3: Configure Instance Details", "Step 4: Add Storage", "Step 5: Add Tags" in your EC2 instance configuration page, you can leave the options as default if you are unsure. 
+4. Now, you need to configure our EC2 instance in the EC2 instance configuration page so that cloud labeler could be successfully deployed.      
+   
+      - Choose 'Ubuntu Server 18.04 LTS (HVM)' as your Amazon Machine Image in "Step 1: Choose an Amazon Machine Image (AMI)" in your EC2 instance configuration page. 
+   
+      - Choose 'General purpose Family t2.micro Type' as your Instance Type if you want to use your free tier in "Step 2: Choose an Instance Type" in your EC2 instance configuration page.
+      
+      - For "Step 3: Configure Instance Details", "Step 4: Add Storage", "Step 5: Add Tags" in your EC2 instance configuration page, you can leave the options as default. 
    
       - In "Step 6: Configure Security Group" of your EC2 instance configuration page, you should include both 'SSH' and 'HTTP' in your security group. If you are unsure about whether you have included both, choose 'All Traffic' as the type of Security Group. Then, you need to specify IP address that has the permission to reach your EC2 instance in the Source in the Security Group. If you are unsure about Source in the Security Group, choose 'Anywhere'. 
       
@@ -129,7 +155,7 @@ Use Appraoch 2 if you
       - Otherwise, you need to launch a new instance.
  </details>
 
-3. Connect to EC2 instance you just created using [SSH](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html). You are now in the Command Shell of your EC2 instance.
+5. Now, you need to connect to EC2 instance you just created using [SSH](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html) to deploy cloud labler. After connection, you are now in the Command Shell of your EC2 instance.
 
 
     <details><summary markdown='span'> Don't know how to connect to EC2 instance using SSH? </summary><br /> 
@@ -164,11 +190,11 @@ Use Appraoch 2 if you
    - Click 'Open' at the bottom-right corner. You are now in the Command Shell of your EC2 instance.
 </details>
   
-4. In the Command Shell of your EC2 instance, the first prompt should be 'login as'. Type 'ubuntu' in the Command Shell of your EC2 instance.
+6. In the Command Shell of your EC2 instance, the first prompt should be 'login as'. Type 'ubuntu' in the Command Shell of your EC2 instance because the default user name in ubuntu is 'ubuntu' and the default password is empty.
 
-5. Install Docker in your EC2 instance. You should type commands specified in [Docker installation tutorial]((https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-docker-ce)) in the Command Shell of your EC2 instance.
+7. Install Docker in your EC2 instance to help you deploy run cloud labler in your EC2 instance. In the Command Shell of your EC2 instance, you should type the commands specified in [Docker installation tutorial]((https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-docker-ce)) to install Docker.
 
-6. After you have installed Docker in your EC2 instance, pull the image from Docker Hub by typing the following command in the Command Shell of your EC2 instance.
+8. After you have installed Docker in your EC2 instance, you need to build the Docker image to run. You can pull the existing Docker image from Docker Hub we provide by typing the following command in the Command Shell of your EC2 instance.
 
     ```
     sudo docker pull zachary62/apache_labeler
@@ -185,7 +211,7 @@ Use Appraoch 2 if you
     </details>
 
 
-7. Run the Docker image in your EC2 instance by typing the following command in the Command Shell of your EC2 instance.
+9. After you have pulled Docker image, you can run it in your EC2 instance. In the Command Shell of your EC2 instance, run the Docker image in your EC2 instance by typing the following command:
 
     ```
     sudo docker run -dit --name labeler -p 8080:80 zachary62/apache_labeler
@@ -200,9 +226,9 @@ Use Appraoch 2 if you
     ```
 </details>
 
-8. Now, you should be able to use cloud labeler. You can find the IP address of your EC2 instance by clicking the EC2 instance in EC2 instance page and check 'IPv4 Public IP' in its description below. Append ':8080' to your IPv4 Public IP. For example, if your 'IPv4 Public IP' is '1.2.3.4', you can visit cloud labeler in 'http://1.2.3.4:8080/' in your local machine (or any other machine whose IP address is included in the Source in the Security Group specified in step 3).
+10. Now, you should be able to use cloud labeler from the web. You can find the IP address of your EC2 instance by clicking the EC2 instance in EC2 instance page and check 'IPv4 Public IP' in its description below. Append ':8080' to your IPv4 Public IP. For example, if your 'IPv4 Public IP' is '1.2.3.4', you can visit cloud labeler in 'http://1.2.3.4:8080/' in your local machine (or any other machine whose IP address is included in the Source in the Security Group specified in step 3).
     
-9. When you are done, you may need to remove the image and container in your EC2 instance. You should type the following command in the Command Shell of your EC2 instance.
+11. When you are done, you may need to remove the image and container in your EC2 instance. You should type the following command in the Command Shell of your EC2 instance:
     ```
     sudo docker stop labeler
     sudo docker rm labeler
