@@ -190,7 +190,7 @@ Use Appraoch 2 if you
    - Click 'Open' at the bottom-right corner. You are now in the Command Shell of your EC2 instance.
 </details>
   
-6. In the Command Shell of your EC2 instance, the first prompt should be 'login as'. Type 'ubuntu' in the Command Shell of your EC2 instance because the default user name in ubuntu is 'ubuntu' and the default password is empty.
+6. In the Command Shell of your EC2 instance, if you haven't logined, the first prompt should be 'login as'. To login, type 'ubuntu' in the Command Shell of your EC2 instancebecause the default user name in ubuntu is 'ubuntu' and the default password is empty. 
 
 7. Install Docker in your EC2 instance to help you deploy run cloud labler in your EC2 instance. In the Command Shell of your EC2 instance, you should type the commands specified in [Docker installation tutorial]((https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-docker-ce)) to install Docker.
 
