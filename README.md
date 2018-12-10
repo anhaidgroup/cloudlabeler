@@ -93,7 +93,7 @@ Ubuntu Server 18.04 LTS (HVM)
 
 * Docker (the version we have tested is 18.06.1-ce)
 
-In the approaches below, we will provide existing docker image for easy use. If you want to customize your docker image, we also prepare [deploy.sh](./deploy.sh) file to help you build your own docker image and [takedown.sh](takedown.sh) file to help you clean up the docker image later. You may need to create your [Docker Hub](https://docs.docker.com/docker-hub/) account and push your docker images so that you can access them later from AWS macine.
+In the approaches below, we will provide existing docker image for easy use. If you want to customize your docker image, we also prepare [deploy.sh](./deploy.sh) file to help you build your own docker image and [takedown.sh](takedown.sh) file to help you clean up the docker image later. You may need to create your [Docker Hub](https://docs.docker.com/docker-hub/) account and push your docker images so that you can access them later from AWS machine.
 
 We offer two approaches to deploy cloud labeler on AWS. Approach 1 is to connect to your AWS machine directly and run docker image yourself. Approach 2 is to use Elastic Container Service, an advanced container orchestration service, to run docker image automatically. 
 
@@ -106,20 +106,20 @@ If you are unsure about which approach to choose, you can consider the following
 Use Approach 1 if you
 * know how to connect to AWS machine using SSH.
 * want to deploy cloud labeler quickly and easily.
-* only have acccess to an existed EC2 instance but don't have permission to launch a new EC2 instance.
+* only have access to an existed EC2 instance but don't have permission to launch a new EC2 instance.
 
-Use Appraoch 2 if you
+Use Approach 2 if you
 * want to run cloud labeler in an existed ECS cluster.
-* want to run cloud labeler at a high scalablility and performance.
+* want to run cloud labeler at a high scalability and performance.
 * want to let different people manage cloud labeler and also ensure security.
 </details>
 
 ### Approach 1
 
-1. We use [AWS](https://aws.amazon.com/), a secure cloud services platform, as the platform to deploy cloud labeler. If you don't have an AWS account, click [here](https://portal.aws.amazon.com/billing/signup#/start) to create a new accout. 
+1. We use [AWS](https://aws.amazon.com/), a secure cloud services platform, as the platform to deploy cloud labeler. If you don't have an AWS account, click [here](https://portal.aws.amazon.com/billing/signup#/start) to create a new account. 
 
-      - After you have created your account, you need to sign up. In [AWS](https://aws.amazon.com/) homapage, click "complete sign up" button at the top-right corner. You need to enter Email address and Password of your AWS account to sign up.
-      - After you have signed up, you need to sign in the console. In [AWS](https://aws.amazon.com/) homapage, the button at the top-right corner should display: "sign in the console". Click it and sign in your console. Now you are in your console page.
+      - After you have created your account, you need to sign up. In [AWS](https://aws.amazon.com/) homepage, click "complete sign up" button at the top-right corner. You need to enter Email address and Password of your AWS account to sign up.
+      - After you have signed up, you need to sign in the console. In [AWS](https://aws.amazon.com/) homepage, the button at the top-right corner should display: "sign in the console". Click it and sign in your console. Now you are in your console page.
 
 2. We use [EC2](https://aws.amazon.com/ec2/), a cloud computing service provided by AWS, to help you deploy cloud labeler.
       
@@ -129,7 +129,7 @@ Use Appraoch 2 if you
 
       - First find 'Instances' in the right panel of EC2 home page and click it. You are now in the EC2 instance page. 
       
-      - Next, find and click on the blue botton 'Launch Instance' in the EC2 instance page. You are now in your EC2 instance configuration page.
+      - Next, find and click on the blue button 'Launch Instance' in the EC2 instance page. You are now in your EC2 instance configuration page.
       
 4. Now, you need to configure our EC2 instance in the EC2 instance configuration page so that cloud labeler could be successfully deployed.      
    
@@ -139,7 +139,7 @@ Use Appraoch 2 if you
       
         - If you are a new user, we recommend 't2.micro' as your 'Instance Type' because AWS provides 750 Hours free 't2.micro' EC2 instance usage for 12 months.
         
-        - If you are an old user, or if you run out of your free tier, you can choose a different 'Instance Type' to meet your demands. For example, you may choose 't2.nano' EC2 instance which is suffcient in the common cases.
+        - If you are an old user, or if you run out of your free tier, you can choose a different 'Instance Type' to meet your demands. For example, you may choose 't2.nano' EC2 instance which is sufficient in the common cases.
         
         - <details><summary markdown='span'>Don't know whether I have run out of free tier?</summary>
           - You can find your free tier in AWS bill. Click [here](https://console.aws.amazon.com/billing/home) to enter AWS bill Page.
@@ -206,7 +206,7 @@ Use Appraoch 2 if you
    
    - Now, open 'Putty' and build connection to your EC2 instance. First, you need to specify which machine you want to SSH. 
    
-     - You need to find the 'Host name' of your EC2 instance.  In EC2 instance page, find the EC2 instance you want to connnect and click on it. You can see its description appears below. You can find its 'Host name' in the 'Public DNS (IPv4)' or 'IPv4 Public IP' in its description.
+     - You need to find the 'Host name' of your EC2 instance.  In EC2 instance page, find the EC2 instance you want to connect and click on it. You can see its description appears below. You can find its 'Host name' in the 'Public DNS (IPv4)' or 'IPv4 Public IP' in its description.
      
      - Open Putty in your local machine. Enter the 'Host name' of the EC2 instance you want to connect in Putty. 
    
@@ -215,9 +215,9 @@ Use Appraoch 2 if you
    - Click 'Open' at the bottom-right corner of Putty. You are now in the Command Shell of your EC2 instance.
 </details>
   
-6. In the Command Shell of your EC2 instance, if you haven't logined, the first prompt should be 'login as'. To login, type 'ubuntu' in the Command Shell of your EC2 instance because the default user name in ubuntu is 'ubuntu' and the default password is empty. 
+6. In the Command Shell of your EC2 instance, if you haven't logged in, the first prompt should be 'login as'. To login, type 'ubuntu' in the Command Shell of your EC2 instance because the default user name in ubuntu is 'ubuntu' and the default password is empty. 
 
-7. Install Docker in your EC2 instance to help you deploy run cloud labler in your EC2 instance. In the Command Shell of your EC2 instance, you should type the commands specified in [Docker installation tutorial](https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-docker-ce) to install Docker.
+7. Install Docker in your EC2 instance to help you deploy run cloud labeler in your EC2 instance. In the Command Shell of your EC2 instance, you should type the commands specified in [Docker installation tutorial](https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-docker-ce) to install Docker.
 
 8. After you have installed Docker in your EC2 instance, you need to build the Docker image to run. You can pull the existing Docker image from Docker Hub we provide by typing the following command in the Command Shell of your EC2 instance.
 
@@ -309,7 +309,7 @@ On the left side, there are three panels:
 
 3. The bottom panel is Upload Panel. It allows users to upload and create their own tables.
 
-Main Panel is on the right side. You can label and view tupe pairs for each pair. On the top there are three buttons. The 'Load Table' button allows you to load new table from database (and you should save current table before loading new one). The 'Download CSV' button allows you to download the CSV of current table. The 'Save and Continue' button allows you to save current table in database.
+Main Panel is on the right side. You can label and view tuple pairs for each pair. On the top there are three buttons. The 'Load Table' button allows you to load new table from database (and you should save current table before loading new one). The 'Download CSV' button allows you to download the CSV of current table. The 'Save and Continue' button allows you to save current table in database.
 
 ### Labeling
 
