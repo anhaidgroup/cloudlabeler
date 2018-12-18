@@ -50,8 +50,8 @@ Cloud labeler has been tested on Ubuntu 18.04. For other versions of Ubuntu, you
   cp -r /cgi-bin /var/www/cgi-bin
   ```
   
-  If you are asked 'rm: remove directory?', type 'y'.
-  If you are told that 'rm: cannot remove directory: No such file or directory', it's fine.
+   If you are asked 'rm: remove directory?', type 'y'.
+   If you are told that 'rm: cannot remove directory: No such file or directory', it's fine.
   
   <details><summary markdown='span'>Don't know where is your Apache Web Root?</summary> 
   <br />
@@ -146,7 +146,7 @@ Use Approach 2 if you
     
       - For "Step 3: Configure Instance Details", "Step 4: Add Storage", "Step 5: Add Tags" in your EC2 instance configuration page, you can leave the options as default. 
    
-      - In "Step 6: Configure Security Group" of your EC2 instance configuration page, you need to build a set of firewall rules to protect your EC2 instance from attacks. If you don't know about Internet traffic or don't want to set firewall rules at this time, choose 'All traffic' as Security Group Type and 'Anywhere' as Security Group Source.
+      - In "Step 6: Configure Security Group" of your EC2 instance configuration page, you need to build a set of firewall rules to protect your EC2 instance from attacks. If you don't know about Internet traffic or don't want to set firewall rules at this time, choose 'All traffic' in the drop-down list under 'Type' and 'Anywhere' in the drop-down list under 'Source'.
       
         - <details><summary markdown='span'>Want to customize your Security Group?</summary>
   
@@ -224,7 +224,10 @@ Use Approach 2 if you
         ca-certificates \
         curl \
         software-properties-common
-    Y
+    ```
+    You need to type 'Enter' (carriage return) after typing the commands. Type 'Y' if asked 'Do you want to continue? [Y/n]'.
+    Then, type the following commands.
+    ```
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
     sudo add-apt-repository \
        "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
@@ -232,8 +235,10 @@ Use Approach 2 if you
        stable"
     sudo apt-get update
     sudo apt-get install docker-ce
-    Y
     ```
+    You need to type 'Enter' (carriage return) after typing the commands. Type 'Y' if asked 'Do you want to continue? [Y/n]'.
+    
+    
     (The commands above is from [Docker installation tutorial](https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-docker-ce). Note that if Docker is updated, some installation commands may change and you need to find the commands yourself.)
 
 8. After you have installed Docker in your EC2 instance, build the Docker image to run. Pull the existing Docker image from Docker Hub we provide by typing the following command in the Command Shell of your EC2 instance.
@@ -272,7 +277,7 @@ Use Approach 2 if you
     
 11. When you are done with labeling, save the data. In the cloud labeler page, click on 'DownLoad CSV' button in cloud labeler page to download the final CSV file of the table to your local machine.
 
-12. Remove the image and container in your EC2 instance. Type the following command in the Command Shell of your EC2 instance:
+12. Remove the image and container in your EC2 instance. Type the following commands in the Command Shell of your EC2 instance:
     ```
     sudo docker stop labeler
     sudo docker rm labeler
