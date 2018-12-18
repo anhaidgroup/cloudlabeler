@@ -118,8 +118,8 @@ Use Approach 2 if you
 
 1. We use [AWS](https://aws.amazon.com/), a secure cloud services platform, as the platform to deploy cloud labeler. If you don't have an AWS account, click [here](https://portal.aws.amazon.com/billing/signup#/start) to create a new account. 
 
-      - After you have created your account, you need to sign up. In [AWS](https://aws.amazon.com/) homepage, click "complete sign up" button at the top-right corner. You need to enter Email address and Password of your AWS account to sign up.
-      - After you have signed up, you need to sign in the console. In [AWS](https://aws.amazon.com/) homepage, the button at the top-right corner will display: "sign in the console". Click it and sign in your console. Now you are in your console page.
+      - After you have created your account, you need to sign up. In [AWS](https://aws.amazon.com/) homepage, click on "complete sign up" button at the top-right corner. You need to enter Email address and Password of your AWS account to sign up.
+      - After you have signed up, you need to sign in the console. In [AWS](https://aws.amazon.com/) homepage, the button at the top-right corner will display: "sign in the console". Click on it and sign in your console. Now you are in your console page.
 
 2. We use [EC2](https://aws.amazon.com/ec2/), a cloud computing service provided by AWS, to help you deploy cloud labeler.
       
@@ -127,7 +127,7 @@ Use Approach 2 if you
       
 3. EC2 provides instance, a cloud virtual machine, as the server to deploy cloud labeler. We now need to rent an EC2 instance.   
 
-      - First find 'Instances' in the right panel of EC2 home page and click it. You are now in the EC2 instance page. 
+      - First find 'Instances' in the right panel of EC2 home page and click on it. You are now in the EC2 instance page. 
       
       - Next, find and click on the blue button 'Launch Instance' in the EC2 instance page. You are now in your EC2 instance configuration page.
       
@@ -135,30 +135,30 @@ Use Approach 2 if you
    
       - Choose 'Ubuntu Server 18.04 LTS (HVM)' as your Amazon Machine Image in "Step 1: Choose an Amazon Machine Image (AMI)" in your EC2 instance configuration page. 
    
-      - EC2 provides different 'Instance Types' optimized to fit different use cases. You can choose your 'Instance Type' in "Step 2: Choose an Instance Type" in your EC2 instance configuration page.
+      - EC2 provides different 'Instance Types' optimized to fit different use cases. Choose your 'Instance Type' in "Step 2: Choose an Instance Type" in your EC2 instance configuration page.
       
         - If you are a new user, we recommend 't2.micro' as your 'Instance Type' because AWS provides 750 Hours free 't2.micro' EC2 instance usage for 12 months.
         
-        - If you are an experienced user, or if you run out of your free tier, you can choose a different 'Instance Type' to meet your demands. For example, you may choose 't2.nano' EC2 instance. 't2.nano' EC2 instance has 512 MiB of memory and 1 vCPU, and is sufficient in the common cases.
+        - If you are an experienced user, or if you run out of your free tier, you can choose a different 'Instance Type' to meet your demands. For example, you may choose 't2.nano' EC2 instance which has 512 MiB of memory and 1 vCPU, and is sufficient in the common cases.
         
         - <details><summary markdown='span'>Don't know whether I have run out of free tier?</summary>
-            You can find your free tier in AWS bill. Go to https://console.aws.amazon.com/billing/home to enter AWS bill Page. You then need to find the bill for current month. In AWS bill Page, click 'bills' to enter AWS bills page. AWS bills page list your bills for all months. In the drop-down list under 'Dates', choose current month. You now can find the bill for current month. In the bill for current month, you can find a section called 'Elastic Compute Cloud'. Click and expand this section. You can find the number of hours your free tier has been consumed in the row starting with '$0.00 per Linux t2.micro instance-hour (or partial hour) under monthly free tier'. For example, if you have run 'Linux t2.micro instance' for 700 Hours, you are likely to run out of free tier soon.</details>
+            You can find your free tier in AWS bill. Go to https://console.aws.amazon.com/billing/home to enter AWS bill Page. You then need to find the bill for current month. In AWS bill Page, click on 'bills' to enter AWS bills page. AWS bills page list your bills for all months. In the drop-down list under 'Dates', choose current month. You now can find the bill for current month. In the bill for current month, you can find a section called 'Elastic Compute Cloud'. Click on and expand this section. You can find the number of hours your free tier has been consumed in the row starting with '$0.00 per Linux t2.micro instance-hour (or partial hour) under monthly free tier'. For example, if you have run 'Linux t2.micro instance' for 700 Hours, you are likely to run out of free tier soon.</details>
     
       - For "Step 3: Configure Instance Details", "Step 4: Add Storage", "Step 5: Add Tags" in your EC2 instance configuration page, you can leave the options as default. 
    
-      - In "Step 6: Configure Security Group" of your EC2 instance configuration page, you need to build a set of firewall rules to protect your EC2 instance from attacks.
+      - In "Step 6: Configure Security Group" of your EC2 instance configuration page, you need to build a set of firewall rules to protect your EC2 instance from attacks. If you don't know about Internet traffic or don't want to set firewall rules at this time, choose 'All traffic' as Security Group Type and 'Anywhere' as Security Group Source.
       
-         - You first need to determine the protocols that are open to your EC2 instance network traffic in the 'Type' column. Your protocols should include both 'SSH', by which you connect to your EC2 instance, and 'HTTP', by which users visit the cloud labeler. You can also add other protocols you need here.
+        - <details><summary markdown='span'>Want to customize your Security Group?</summary>
+  
+           You first need to determine the protocols that are open to your EC2 instance network traffic in the 'Type' column. Your protocols should include both 'SSH', by which you connect to your EC2 instance, and 'HTTP', by which users visit the cloud labeler. You can also add other protocols you need here. Then, you need to determine the traffic that can reach your EC2 instance for each protocol in the 'Source' column. For 'SSH' protocol, you should choose 'My IP' in the common cases because it is unsafe to let other people access your EC2 instance directly by 'SSH'. For 'HTTP' protocol, you should choose 'Anywhere' in common cases because you want to let other people label tuple pairs through cloud labeler you have deployed by 'HTTP'.</details>
          
-         - Then, you need to determine the traffic that can reach your EC2 instance for each protocol in the 'Source' column. For 'SSH' protocol, you should choose 'My IP' in the common cases because it is unsafe to let other people access your EC2 instance directly by 'SSH'. For 'HTTP' protocol, you should choose 'Anywhere' in common cases because you want to let other people label tuple pairs through cloud labeler you have deployed by 'HTTP'.
-      
-      - In "Step 7: Review Instance Launch" of your EC2 instance configuration page, you can review all the configurations of your EC2 instance. You can go back to the steps before if you need to do some modifications. After that, you can click "launch" button at the bottom-right corner of your EC2 instance configuration page to complete your configuration.
+      - In "Step 7: Review Instance Launch" of your EC2 instance configuration page, you can review all the configurations of your EC2 instance. You can go back to the steps before if you need to do some modifications. After that, you can click on "launch" button at the bottom-right corner of your EC2 instance configuration page to complete your configuration.
    
-      - After clicking 'Launch', you need to download a private key file to allow you to securely SSH into your instance. 
+      - After clicking on 'Launch', you need to download a private key file to allow you to securely SSH into your instance. 
       
         - If you already have a private key file, you can use the old private key file to securely SSH into this EC2 instance without creating a new one. Select 'Choose a new key pair' in the first drop-down list, and select the key pair you want to use for this EC2 instance in the second drop-down list. 
         
-        - If you don't have a private key file, choose 'Create a new key pair', enter your key pair name and download the private key file. You need to save the private key file in a secure place in your local machine.
+        - If you don't have a private key file, choose 'Create a new key pair', enter your key pair name and download the private key file. You need to save the private key file in a secure place in your local machine. For example, you can save your private key file in /home/private.
       
    <details><summary markdown='span'>Already have your deployed instance?</summary><br /> 
       If you want to deploy cloud labeler on an existed EC2 instance, your existed EC2 instance must meet some requirements. Click on your instance in EC2 instance page and check its description shown below. 
@@ -184,7 +184,7 @@ Use Approach 2 if you
    chmod 400 /path/my-key-pair.pem
    ```
    
-   - Use ssh command in your local machine to connect to the EC2 instance. You need to specify your private key file location, user name and host name in your ssh command. The user name is 'ubuntu'. You can find the host name of your EC2 instance by clicking your EC2 instance in EC2 instance page and check 'Public DNS (IPv4)' in its description below. For example, if your pem file is at /path/my-key-pair.pem and your Public DNS (IPv4) is ec2-198-51-100-1.compute-1.amazonaws.com, type:
+   - Use ssh command in your local machine to connect to the EC2 instance. You need to specify your private key file location, user name and host name in your ssh command. The user name is 'ubuntu'. You can find the host name of your EC2 instance by clicking on your EC2 instance in EC2 instance page and check 'Public DNS (IPv4)' in its description below. For example, if your pem file is at /path/my-key-pair.pem and your Public DNS (IPv4) is ec2-198-51-100-1.compute-1.amazonaws.com, type:
    
    ```
    ssh -i /path/my-key-pair.pem ubuntu@ec2-198-51-100-1.compute-1.amazonaws.com
@@ -210,14 +210,33 @@ Use Approach 2 if you
    
    - Then, you need to specify the private key file for SSH connection. In the left panel of 'Putty' in your local machine, choose Connection->SSH->Auth. In 'Private key file for authentication', choose the ppk file generated by 'Putty Key Generator' in your local machine.
    
-   - Click 'Open' at the bottom-right corner of Putty. You are now in the Command Shell of your EC2 instance.
+   - Click on 'Open' at the bottom-right corner of Putty. You are now in the Command Shell of your EC2 instance.
 </details>
   
 6. In the Command Shell of your EC2 instance, if you haven't logged in, the first prompt is 'login as'. To login, type 'ubuntu' in the Command Shell of your EC2 instance because the default user name in ubuntu is 'ubuntu' and the default password is empty. 
 
-7. Install Docker in your EC2 instance to help you deploy cloud labeler in your EC2 instance. In the Command Shell of your EC2 instance, type the commands specified in [Docker installation tutorial](https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-docker-ce) to install Docker.
+7. Install Docker in your EC2 instance to help you deploy cloud labeler in your EC2 instance. In the Command Shell of your EC2 instance, type typing the following commands:
 
-8. After you have installed Docker in your EC2 instance, you need to build the Docker image to run. Pull the existing Docker image from Docker Hub we provide by typing the following command in the Command Shell of your EC2 instance.
+    ```
+    sudo apt-get update
+    sudo apt-get install \
+        apt-transport-https \
+        ca-certificates \
+        curl \
+        software-properties-common
+    Y
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    sudo add-apt-repository \
+       "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+       $(lsb_release -cs) \
+       stable"
+    sudo apt-get update
+    sudo apt-get install docker-ce
+    Y
+    ```
+    (The commands above is from [Docker installation tutorial](https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-docker-ce). Note that if Docker is updated, some installation commands may change and you need to find the commands yourself.)
+
+8. After you have installed Docker in your EC2 instance, build the Docker image to run. Pull the existing Docker image from Docker Hub we provide by typing the following command in the Command Shell of your EC2 instance.
 
     ```
     sudo docker pull zachary62/apache_labeler
@@ -234,7 +253,7 @@ Use Approach 2 if you
     </details>
 
 
-9. After you have pulled Docker image, you can run it in your EC2 instance. In the Command Shell of your EC2 instance, run the Docker image in your EC2 instance by typing the following command:
+9. After you have pulled Docker image, run it in your EC2 instance. In the Command Shell of your EC2 instance, run the Docker image in your EC2 instance by typing the following command:
 
     ```
     sudo docker run -dit --name labeler -p 80:80 zachary62/apache_labeler
@@ -249,9 +268,11 @@ Use Approach 2 if you
     ```
 </details>
 
-10. Now, you are able to use cloud labeler from the web. You can find the IP address of your EC2 instance by clicking on the EC2 instance in EC2 instance page and check 'IPv4 Public IP' in its description below. Append ':80' to your IPv4 Public IP. For example, if your 'IPv4 Public IP' is '1.2.3.4', you can visit cloud labeler in 'http://1.2.3.4:80/' in your local machine (or any other machine whose IP address is included in the 'Source' of 'HTTP' in step 3).
+10. Now, you are able to use cloud labeler from the web. You can find the IP address of your EC2 instance by clicking on the EC2 instance in EC2 instance page and check 'IPv4 Public IP' in its description below. Append ':80' to your IPv4 Public IP. For example, if your 'IPv4 Public IP' is '1.2.3.4', you can visit cloud labeler page in 'http://1.2.3.4:80/' in your local machine (or any other machine whose IP address is included in the 'Source' of 'HTTP' in step 3).
     
-11. When you are done, you need to remove the image and container in your EC2 instance. Type the following command in the Command Shell of your EC2 instance:
+11. When you are done with labeling, save the data. In the cloud labeler page, click on 'DownLoad CSV' button in cloud labeler page to download the final CSV file of the table to your local machine.
+
+12. Remove the image and container in your EC2 instance. Type the following command in the Command Shell of your EC2 instance:
     ```
     sudo docker stop labeler
     sudo docker rm labeler
@@ -267,6 +288,8 @@ Use Approach 2 if you
     sudo docker rmi John/apache_labeler
     ``` 
 </details>
+
+13. Finally, terminate your EC2 instance. Right clicking on your EC2 instance in EC2 instance page. Click on 'Instance State'. Click on 'Terminate'.
 
 
 ### Approach 2
