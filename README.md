@@ -215,7 +215,7 @@ Use Approach 2 if you
   
 6. In the Command Shell of your EC2 instance, if you haven't logged in, the first prompt is 'login as'. To login, type 'ubuntu' in the Command Shell of your EC2 instance because the default user name in ubuntu is 'ubuntu' and the default password is empty. 
 
-7. Install Docker in your EC2 instance to help you deploy cloud labeler in your EC2 instance. In the Command Shell of your EC2 instance, type typing the following commands:
+7. Install Docker in your EC2 instance to help you deploy cloud labeler in your EC2 instance. In the Command Shell of your EC2 instance, type the following commands:
 
     ```
     sudo apt-get update
